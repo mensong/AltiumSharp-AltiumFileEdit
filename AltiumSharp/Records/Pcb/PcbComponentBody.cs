@@ -81,7 +81,7 @@ namespace OriginalCircuit.AltiumSharp.Records
             Texture = p["TEXTURE"].AsStringOrDefault();
             TextureCenter = new CoordPoint(p["TEXTURECENTERX"].AsCoord(), p["TEXTURECENTERY"].AsCoord());
             TextureSize = new CoordPoint(p["TEXTURESIZEX"].AsCoord(), p["TEXTURESIZEY"].AsCoord());
-            TextureRotation = p["TEXTUREROTATION"].AsDouble();
+            TextureRotation = p["TEXTUREROTATION"].AsDoubleOrDefault();
             ModelId = p["MODELID"].AsStringOrDefault();
             ModelChecksum = p["MODEL.CHECKSUM"].AsLongOrDefault();
             ModelSource = p["MODEL.SOURCE"].AsString();

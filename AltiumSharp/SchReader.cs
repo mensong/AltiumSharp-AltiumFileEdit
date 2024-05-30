@@ -337,7 +337,7 @@ namespace OriginalCircuit.AltiumSharp
 
             if (pinFunctionData?.Count > 0)
             {
-                var pinDefinedFunctionsCount = pinFunctionData[0].Value.AsInt();
+                var pinDefinedFunctionsCount = pinFunctionData[0].Value.AsIntOrDefault();
                 for (int i = 1; i < pinFunctionData.Count; i++)
                 {
                     pin.Functions.Add(pinFunctionData[i].Value.AsString());

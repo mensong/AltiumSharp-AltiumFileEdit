@@ -41,7 +41,17 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
         /// Gets the string representation of the UTF8 data that represents the value of this parameter.
         /// <seealso cref="Parameter.ToString"/>
         /// </summary>
-        internal string AsUtf8Data() => Utils.Win1252Encoding.GetString(Encoding.UTF8.GetBytes(_data));
+        internal string AsUtf8Data()
+        {
+            try
+            {
+                return Utils.Win1252Encoding.GetString(Encoding.UTF8.GetBytes(_data));
+            }
+            catch
+            {
+                return _data;
+            }
+        }
 
         /// <summary>
         /// Gets the string representation of this parameter value.
@@ -70,6 +80,8 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
         public int AsIntOrDefault(int defaultValue = default) =>
             int.TryParse(_data, NumberStyles.Integer, Fp, out var result) ? result : defaultValue;
 
+        public long AsLong() => long.Parse(_data, NumberStyles.Integer, Fp);
+
         public long AsLongOrDefault(long defaultValue = default) =>
             long.TryParse(_data, NumberStyles.Integer, Fp, out var result) ? result : defaultValue;
 
@@ -93,7 +105,7 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
         /// <summary>
         /// Gets the boolean value of this parameter.
         /// </summary>
-        public bool AsBool()
+        public bool AsBool(bool def = default)
         {
             if (TrueValues.Contains(_data))
             {
@@ -105,14 +117,25 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
             }
             else
             {
-                throw new FormatException("Value is not a valid boolean");
+                //throw new FormatException("Value is not a valid boolean");
+                return def;
             }
         }
 
         /// <summary>
         /// Gets the coordinate value of this parameter.
         /// </summary>
-        public Coord AsCoord() => Utils.StringToCoordUnit(_data, out _);
+        public Coord AsCoord()
+        {
+            try
+            {
+                return Utils.StringToCoordUnit(_data, out _);
+            }
+            catch
+            {
+                return default(Coord);
+            }
+        }
 
         /// <summary>
         /// Gets the color value of this parameter.
@@ -179,7 +202,7 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
         /// <returns>
         /// List of integers after separating the current value using <paramref name="separator"/>.
         /// </returns>
-        public IReadOnlyList<int> AsIntList(char? separator = null) => AsEnumerable(separator).Select(p => p.AsInt()).ToArray();
+        public IReadOnlyList<int> AsIntList(char? separator = null) => AsEnumerable(separator).Select(p => p.AsIntOrDefault()).ToArray();
 
         /// <summary>
         /// Converts the current value to a list of double precision floating point numbers.
@@ -191,7 +214,7 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
         /// <returns>
         /// List of double precision values after separating the current value using <paramref name="separator"/>.
         /// </returns>
-        public IReadOnlyList<double> AsDoubleList(char? separator = null) => AsEnumerable(separator).Select(p => p.AsDouble()).ToArray();
+        public IReadOnlyList<double> AsDoubleList(char? separator = null) => AsEnumerable(separator).Select(p => p.AsDoubleOrDefault()).ToArray();
 
         /// <summary>
         /// Converts the current value to a list of internal coordinate values.

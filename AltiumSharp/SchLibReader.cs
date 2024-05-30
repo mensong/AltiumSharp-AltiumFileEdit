@@ -28,6 +28,8 @@ namespace OriginalCircuit.AltiumSharp
 
             foreach (var componentRefName in refNames)
             {
+                if (string.IsNullOrEmpty(componentRefName))
+                    continue;
                 var sectionKey = GetSectionKeyFromRefName(componentRefName);
                 Data.Items.Add(ReadComponent(sectionKey));
             }
@@ -118,7 +120,9 @@ namespace OriginalCircuit.AltiumSharp
         /// <returns>Component instance.</returns>
         private SchComponent ReadComponent(string resourceName)
         {
-            var componentStorage = Cf.TryGetStorage(resourceName) ?? throw new ArgumentException($"Symbol resource not found: {resourceName}");
+            var componentStorage = Cf.TryGetStorage(resourceName);// ?? throw new ArgumentException($"Symbol resource not found: {resourceName}");
+            if (componentStorage == null)
+                return null;
 
             BeginContext(resourceName);
 

@@ -174,7 +174,7 @@ namespace OriginalCircuit.AltiumSharp.BasicTypes
         /// <param name="unit">Unit of the resulting coordinate.</param>
         /// <returns>Returns the output coordinate.</returns>
         public static Coord StringToCoordUnit(string input, out Unit unit) =>
-            TryStringToCoordUnit(input, out var result, out unit) ? result : throw new FormatException($"Invalid coordinate: {input}");
+            TryStringToCoordUnit(input, out var result, out unit) ? result : default(Coord);//throw new FormatException($"Invalid coordinate: {input}");
 
         /// <summary>
         /// Converts a string to a coordinate and it's unit.

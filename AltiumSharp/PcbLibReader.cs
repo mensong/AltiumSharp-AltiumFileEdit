@@ -591,33 +591,40 @@ namespace OriginalCircuit.AltiumSharp
         {
             BeginContext("Models");
 
-            var models = library.GetStorage("Models");
-            var recordCount = ReadHeader(models);
-            using (var reader = models.GetStream("Data").GetBinaryReader())
+            try
             {
-                for (var i = 0; i < recordCount; ++i)
+                var models = library.GetStorage("Models");
+                var recordCount = ReadHeader(models);
+                using (var reader = models.GetStream("Data").GetBinaryReader())
                 {
-                    var parameters = ReadBlock(reader, size => ReadParameters(reader, size));
-                    var modelId = parameters["ID"].AsString();
-                    var modelCompressedData = models.GetStream($"{i}").GetData();
-
-                    // models are stored as ASCII STEP files but using zlib compression
-                    var stepModel = ParseCompressedZlibData(modelCompressedData, stream =>
+                    for (var i = 0; i < recordCount; ++i)
                     {
-                        using (var modelReader = new StreamReader(stream, Encoding.ASCII))
+                        var parameters = ReadBlock(reader, size => ReadParameters(reader, size));
+                        var modelId = parameters["ID"].AsString();
+                        var modelCompressedData = models.GetStream($"{i}").GetData();
+
+                        // models are stored as ASCII STEP files but using zlib compression
+                        var stepModel = ParseCompressedZlibData(modelCompressedData, stream =>
                         {
-                            return modelReader.ReadToEnd();
-                        }
-                    });
+                            using (var modelReader = new StreamReader(stream, Encoding.ASCII))
+                            {
+                                return modelReader.ReadToEnd();
+                            }
+                        });
 
-                    // assign STEP data to component bodies
-                    var bodies = Data.Items.SelectMany(c => c.GetPrimitivesOfType<PcbComponentBody>(false))
-                        .Where(body => body.ModelId.ToUpperInvariant() == modelId.ToUpperInvariant());
-                    foreach (var body in bodies)
-                    {
-                        body.StepModel = stepModel;
+                        // assign STEP data to component bodies
+                        var bodies = Data.Items.SelectMany(c => c.GetPrimitivesOfType<PcbComponentBody>(false))
+                            .Where(body => body.ModelId.ToUpperInvariant() == modelId.ToUpperInvariant());
+                        foreach (var body in bodies)
+                        {
+                            body.StepModel = stepModel;
+                        }
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+
             }
 
             EndContext();

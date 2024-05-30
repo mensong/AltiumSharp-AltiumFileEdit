@@ -30,7 +30,7 @@ namespace OriginalCircuit.AltiumSharp.Records
             base.ImportFromParameters(p);
             IsSolid = p["ISSOLID"].AsBool();
             LineWidth = p["LINEWIDTH"].AsEnumOrDefault<LineWidth>();
-            Vertices = Enumerable.Range(1, p["LOCATIONCOUNT"].AsInt())
+            Vertices = Enumerable.Range(1, p["LOCATIONCOUNT"].AsIntOrDefault())
                 .Select(i => new CoordPoint(
                     Utils.DxpFracToCoord(p[$"X{i}"].AsIntOrDefault(), p[$"X{i}_FRAC"].AsIntOrDefault()),
                     Utils.DxpFracToCoord(p[$"Y{i}"].AsIntOrDefault(), p[$"Y{i}_FRAC"].AsIntOrDefault())))

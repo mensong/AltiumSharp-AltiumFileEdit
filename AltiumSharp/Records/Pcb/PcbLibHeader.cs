@@ -708,7 +708,7 @@ namespace OriginalCircuit.AltiumSharp.Records
             DisplayUnit = p["DISPLAYUNIT"].AsIntOrDefault() == 0 ? Unit.Millimeter : Unit.Mil;
             ToggleLayers = p["TOGGLELAYERS"].AsStringOrDefault();
             ShowDefaultSets = p["SHOWDEFAULTSETS"].AsBool();
-            Layersets = Enumerable.Range(1, p["LAYERSETSCOUNT"].AsInt())
+            Layersets = Enumerable.Range(1, p["LAYERSETSCOUNT"].AsIntOrDefault())
                 .Select(i => (
                     p[fmt("LAYERSET{0}NAME", i)].AsStringOrDefault(),
                     p[fmt("LAYERSET{0}LAYERS", i)].AsStringOrDefault(),

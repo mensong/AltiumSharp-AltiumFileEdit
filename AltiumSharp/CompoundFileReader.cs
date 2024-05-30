@@ -367,7 +367,7 @@ namespace OriginalCircuit.AltiumSharp
                     if (reader.BaseStream.Position > position + sanitizedSize)
                     {
                         // oops... if this happened we read past the block size
-                        throw new IndexOutOfRangeException("Read past the end of the block");
+                        //throw new IndexOutOfRangeException("Read past the end of the block");
                     }
                     return result;
                 }
