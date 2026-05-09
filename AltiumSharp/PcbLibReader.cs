@@ -640,7 +640,14 @@ namespace OriginalCircuit.AltiumSharp
                 {
                     var refName = ReadStringBlock(reader);
                     var sectionKey = GetSectionKeyFromRefName(refName);
-                    Data.Items.Add(ReadFootprint(sectionKey));
+                    try
+                    {
+                        Data.Items.Add(ReadFootprint(sectionKey));
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
         }
