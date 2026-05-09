@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>OpenMcdf</id>
+    <version>2.3.1</version>
+    <title>OpenMcdf</title>
+    <authors>ironfede</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">MPL-2.0</license>
+    <licenseUrl>https://licenses.nuget.org/MPL-2.0</licenseUrl>
+    <icon>icon.png</icon>
+    <readme>README.md</readme>
+    <projectUrl>https://github.com/ironfede/openmcdf</projectUrl>
+    <description>OpenMcdf is a 100% .net / C# component that allows developers to manipulate Microsoft Compound Document File Format for OLE structured storage. 
+It supports read/write operations on streams and storages and traversal of structures tree.</description>
+    <releaseNotes>Bug fixing (high priority for #119, issue with stream resizing) and enhancements in extensions</releaseNotes>
+    <copyright>Copyright © 2010-2024, Federico Blaseotto</copyright>
+    <tags>Compound file, c#, structured storage</tags>
+    <repository type="git" url="https://github.com/ironfede/openmcdf" commit="d18fe499c1ab61a85a1030d54fdfc93c55c31734" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.0" />
+      <group targetFramework=".NETStandard2.0" />
+    </dependencies>
+  </metadata>
+</package>
