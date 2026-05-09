@@ -29,7 +29,14 @@ namespace OriginalCircuit.AltiumSharp
             foreach (var componentRefName in refNames)
             {
                 var sectionKey = GetSectionKeyFromRefName(componentRefName);
-                Data.Items.Add(ReadComponent(sectionKey));
+                try
+                {
+                    Data.Items.Add(ReadComponent(sectionKey));
+                }
+                catch (Exception)
+                {
+
+                }
             }
 
             var embeddedImages = ReadStorageEmbeddedImages();
