@@ -33,7 +33,7 @@ namespace OriginalCircuit.AltiumSharp
                 {
                     Data.Items.Add(ReadComponent(sectionKey));
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
 
                 }

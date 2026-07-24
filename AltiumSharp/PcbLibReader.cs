@@ -47,9 +47,17 @@ namespace OriginalCircuit.AltiumSharp
                 var keyCount = reader.ReadInt32();
                 for (int i = 0; i < keyCount; ++i)
                 {
-                    var libRef = ReadPascalString(reader);
-                    var sectionKey = ReadStringBlock(reader);
-                    SectionKeys.Add(libRef, sectionKey);
+                    try
+                    {
+
+                        var libRef = ReadPascalString(reader);
+                        var sectionKey = ReadStringBlock(reader);
+                        SectionKeys.Add(libRef, sectionKey);
+                    }
+                    catch (Exception ex)
+                    {
+
+                    }
                 }
             }
 
