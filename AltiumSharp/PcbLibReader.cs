@@ -612,7 +612,7 @@ namespace OriginalCircuit.AltiumSharp
                     // models are stored as ASCII STEP files but using zlib compression
                     var stepModel = ParseCompressedZlibData(modelCompressedData, stream =>
                     {
-                        using (var modelReader = new StreamReader(stream, Encoding.ASCII))
+                        using (var modelReader = new StreamReader(stream, Encoding.GetEncoding("ISO-8859-1")))
                         {
                             return modelReader.ReadToEnd();
                         }

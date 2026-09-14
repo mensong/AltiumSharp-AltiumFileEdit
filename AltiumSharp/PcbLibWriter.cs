@@ -466,7 +466,7 @@ namespace OriginalCircuit.AltiumSharp
                     WriteBlock(writer, w => WriteParameters(w, parameters));
 
                     // models are stored as ASCII STEP files but using zlib compression
-                    var modelCompressedData = CompressZlibData(Encoding.ASCII.GetBytes(body.StepModel));
+                    var modelCompressedData = CompressZlibData(Encoding.GetEncoding("ISO-8859-1").GetBytes(body.StepModel));
                     models.GetOrAddStream($"{i}").SetData(modelCompressedData);
                 }
             });
